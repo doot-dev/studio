@@ -1,12 +1,19 @@
+
+// This component is no longer used in the new Netflix-style UI.
+// It can be removed or kept for reference if needed for other parts of the app
+// that might still use a tabbed feed.
+// For now, marking as deprecated by commenting out.
+
+/*
 'use client';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PostCard } from "@/components/PostCard";
+import { PostCard } from "@/components/PostCard"; // PostCard might be replaced or restyled
 import type { Review } from "@/types";
 
 interface FeedTabsProps {
   trendingReviews: Review[];
-  followingReviews: Review[]; // Initially might be same as trending or empty
+  followingReviews: Review[];
 }
 
 export function FeedTabs({ trendingReviews, followingReviews }: FeedTabsProps) {
@@ -20,6 +27,7 @@ export function FeedTabs({ trendingReviews, followingReviews }: FeedTabsProps) {
         {trendingReviews.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {trendingReviews.map((review) => (
+              // Ensure PostCard or its replacement fits the new aesthetic if used elsewhere
               <PostCard key={review.id} review={review} />
             ))}
           </div>
@@ -41,3 +49,6 @@ export function FeedTabs({ trendingReviews, followingReviews }: FeedTabsProps) {
     </Tabs>
   );
 }
+*/
+
+export {}; // Add an empty export to make this a module if all content is commented out.

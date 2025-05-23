@@ -1,3 +1,6 @@
+
+'use client'; // Add this if not already present for useEffect
+
 import { mockReviews, mockUsers } from '@/data/mock';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,16 +9,30 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Heart, MessageCircle, Bookmark as BookmarkIcon, Share2, Edit3, Trash2, ExternalLink } from 'lucide-react';
+import { useState, useEffect } from 'react'; // Import useState and useEffect
 
 export default function ReviewDetailPage({ params }: { params: { reviewId: string } }) {
   const review = mockReviews.find(r => r.id === params.reviewId);
+  const [formattedDate, setFormattedDate] = useState('');
+
+  useEffect(() => {
+    if (review) {
+      setFormattedDate(
+        new Date(review.createdAt).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      );
+    }
+  }, [review]);
 
   if (!review) {
     return <p className="text-center text-destructive py-10">Review not found.</p>;
   }
 
   // Assuming current user for edit/delete actions (placeholder)
-  const isAuthor = review.userId === mockUsers[0].id; 
+  const isAuthor = review.userId === mockUsers[0].id;
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
@@ -24,7 +41,7 @@ export default function ReviewDetailPage({ params }: { params: { reviewId: strin
           <Image
             src={review.thumbnailUrl}
             alt={`Thumbnail for ${review.movieTitle}`}
-            width={1200} 
+            width={1200}
             height={675} // 16:9 aspect ratio for a banner
             className="w-full h-auto object-cover aspect-video" // Or keep aspect-[2/3] if preferred
             data-ai-hint="movie banner"
@@ -53,7 +70,7 @@ export default function ReviewDetailPage({ params }: { params: { reviewId: strin
                   {review.user?.name || 'Anonymous'}
                 </Link>
                 <p className="text-sm text-muted-foreground">
-                  Posted on {new Date(review.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  {formattedDate ? `Posted on ${formattedDate}` : 'Loading date...'}
                 </p>
               </div>
             </div>
@@ -115,4 +132,3 @@ export default function ReviewDetailPage({ params }: { params: { reviewId: strin
 //     reviewId: review.id,
 //   }));
 // }
-

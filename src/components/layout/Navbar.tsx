@@ -15,7 +15,7 @@ export function Navbar() {
       <div className="container flex h-16 items-center px-4 sm:px-6 lg:px-8">
         <Link href="/" className="mr-6 flex items-center space-x-2">
           <Film className="h-7 w-7 text-accent" />
-          <span className="font-bold text-xl whitespace-nowrap">ReelReview</span>
+          <span className="font-bold text-xl whitespace-nowrap">DootRec</span>
         </Link>
 
         <div className="flex-1 flex justify-center items-center max-w-xl mx-auto">

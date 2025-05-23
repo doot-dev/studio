@@ -13,7 +13,7 @@ export default function LoginPage() {
           <div className="inline-block p-3 bg-primary/10 rounded-full mb-4">
             <Film className="h-10 w-10 text-primary" />
           </div>
-          <CardTitle className="text-3xl font-bold text-primary">Welcome Back to ReelReview</CardTitle>
+          <CardTitle className="text-3xl font-bold text-primary">Welcome Back to DootRec</CardTitle>
           <CardDescription>Enter your credentials to access your account.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">

@@ -5,8 +5,8 @@ import './globals.css';
 import { AppLayout } from '@/components/layout/AppLayout';
 
 export const metadata: Metadata = {
-  title: 'ReelReview - Share Your Movie & Show Takes',
-  description: 'Discover, review, and discuss your favorite movies and TV shows on ReelReview.',
+  title: 'DootRec - Share Your Movie & Show Takes',
+  description: 'Discover, review, and discuss your favorite movies and TV shows on DootRec.',
 };
 
 export default function RootLayout({

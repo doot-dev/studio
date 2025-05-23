@@ -13,7 +13,7 @@ export default function SignupPage() {
           <div className="inline-block p-3 bg-accent/10 rounded-full mb-4">
              <UserPlus className="h-10 w-10 text-accent" />
           </div>
-          <CardTitle className="text-3xl font-bold text-accent">Join ReelReview</CardTitle>
+          <CardTitle className="text-3xl font-bold text-accent">Join DootRec</CardTitle>
           <CardDescription>Create an account to start sharing and discovering reviews.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">

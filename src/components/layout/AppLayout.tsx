@@ -14,7 +14,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         {children}
       </main>
       <footer className="py-6 text-center text-muted-foreground text-sm border-t border-border/40">
-        © {new Date().getFullYear()} ReelReview. All rights reserved.
+        © {new Date().getFullYear()} DootRec. All rights reserved.
       </footer>
       <Toaster />
     </div>

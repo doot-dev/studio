@@ -1,8 +1,10 @@
+
 import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import './globals.css';
 import { AppLayout } from '@/components/layout/AppLayout';
+import DevErrorBoundary from '@/components/DevErrorBoundary';
 
 export const metadata: Metadata = {
   title: 'DootRec - Share Your Movie & Show Takes',
@@ -14,12 +16,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pageContent = (
+    <AppLayout>
+      {children}
+    </AppLayout>
+  );
+
   return (
     <html lang="en">
       <body className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}>
-        <AppLayout>
-          {children}
-        </AppLayout>
+        {process.env.NODE_ENV === 'development' ? (
+          <DevErrorBoundary>{pageContent}</DevErrorBoundary>
+        ) : (
+          pageContent
+        )}
       </body>
     </html>
   );

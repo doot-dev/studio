@@ -1,7 +1,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image'; // Import the Image component
-import { Search, HomeIcon, LayoutGrid, ListVideo, Users, Settings, UserCircle, PlusSquare } from 'lucide-react';
+import { Search, HomeIcon, LayoutGrid, Users, Settings, UserCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -15,7 +15,6 @@ export function Navbar() {
   const navLinks = [
     { href: '/', label: 'Home', icon: <HomeIcon className="h-5 w-5" /> },
     { href: '/genres', label: 'Genres', icon: <LayoutGrid className="h-5 w-5" /> },
-    { href: '/watchlist', label: 'My List', icon: <ListVideo className="h-5 w-5" /> }, // Watchlist page repurposed as My List
     { href: '/community', label: 'Community', icon: <Users className="h-5 w-5" /> },
   ];
 
@@ -51,13 +50,6 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center space-x-1 sm:space-x-2 ml-auto">
-          <Button variant="default" size="sm" className="bg-accent hover:bg-accent/90 text-accent-foreground px-2 sm:px-3" asChild>
-            <Link href="/create">
-              <PlusSquare className="h-4 w-4 sm:mr-2" />
-              <span className="hidden sm:inline">Create</span>
-            </Link>
-          </Button>
-
           {isAuthenticated ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

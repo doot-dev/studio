@@ -6,28 +6,31 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { PostCard } from "@/components/PostCard";
-import { mockReviews } from "@/data/mock"; 
+import { mockReviews } from "@/data/mock";
 import type { Review } from "@/types";
 
 export default function ExplorePage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const initialFeaturedReviews = mockReviews.slice(0, 3);
-  const [displayedReviews, setDisplayedReviews] = useState<Review[]>(initialFeaturedReviews);
-  const [pageTitle, setPageTitle] = useState('Featured Reviews');
-  const [hasSearched, setHasSearched] = useState(false);
+  // Initialize with all reviews from mockData
+  const [displayedReviews, setDisplayedReviews] = useState<Review[]>(mockReviews);
+  // Initial page title reflecting all content
+  const [pageTitle, setPageTitle] = useState('Explore All Content');
+  // To track if a search attempt with a non-empty query has been made
+  const [hasSearchedWithQuery, setHasSearchedWithQuery] = useState(false);
 
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setHasSearched(true);
 
     if (!searchQuery.trim()) {
-      setDisplayedReviews(initialFeaturedReviews);
-      setPageTitle('Featured Reviews');
-      // If search query is empty, don't treat it as "no results found" for a specific query
-      // but rather revert to initial state.
+      // If search query is empty, display all reviews and reset search state
+      setDisplayedReviews(mockReviews);
+      setPageTitle('Explore All Content');
+      setHasSearchedWithQuery(false); // Reset because it's an empty/cleared search
       return;
     }
 
+    // A search with a non-empty query is being made
+    setHasSearchedWithQuery(true);
     const lowerCaseQuery = searchQuery.toLowerCase();
     const results = mockReviews.filter(review => {
       const titleMatch = review.movieTitle.toLowerCase().includes(lowerCaseQuery);
@@ -38,11 +41,8 @@ export default function ExplorePage() {
     });
 
     setDisplayedReviews(results);
-    if (results.length > 0) {
-      setPageTitle(`Search Results for "${searchQuery}"`);
-    } else {
-      setPageTitle('Search Results'); // Keep title generic if no results
-    }
+    // Always update page title to reflect the search, even if no results
+    setPageTitle(`Search Results for "${searchQuery}"`);
   };
 
   return (
@@ -57,9 +57,9 @@ export default function ExplorePage() {
       <form onSubmit={handleSearchSubmit} className="flex w-full max-w-2xl mx-auto items-center space-x-2">
         <div className="relative flex-grow">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-            <Input 
-              type="search" 
-              placeholder="Search movies, shows, users, genres..." 
+            <Input
+              type="search"
+              placeholder="Search movies, shows, users, genres..."
               className="pl-10 pr-4 py-3 h-12 text-base rounded-lg"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -77,7 +77,14 @@ export default function ExplorePage() {
             ))}
           </div>
         ) : (
-          hasSearched && <p className="text-center text-muted-foreground py-10">No results found for "{searchQuery}". Try a different search!</p>
+          // Show "no results" only if a specific search query was made and yielded nothing
+          hasSearchedWithQuery && searchQuery.trim() !== '' && (
+            <p className="text-center text-muted-foreground py-10">No results found for "{searchQuery}". Try a different search!</p>
+          )
+        )}
+        {/* If mockReviews itself is empty initially, and no search has been made */}
+        {!hasSearchedWithQuery && displayedReviews.length === 0 && mockReviews.length === 0 && (
+             <p className="text-center text-muted-foreground py-10">No content available to explore yet.</p>
         )}
       </div>
     </div>

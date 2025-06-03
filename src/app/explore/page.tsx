@@ -1,7 +1,8 @@
 
 'use client';
 
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent, Suspense } from "react";
+import { useSearchParams } from 'next/navigation';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
@@ -9,27 +10,41 @@ import { PostCard } from "@/components/PostCard";
 import { mockReviews } from "@/data/mock";
 import type { Review } from "@/types";
 
-export default function ExplorePage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  // Initialize with all reviews from mockData
-  const [displayedReviews, setDisplayedReviews] = useState<Review[]>(mockReviews);
-  // Initial page title reflecting all content
+function ExplorePageContent() {
+  const searchParams = useSearchParams();
+  const initialGenre = searchParams.get('genre');
+
+  const [searchQuery, setSearchQuery] = useState(initialGenre || '');
+  const [displayedReviews, setDisplayedReviews] = useState<Review[]>([]);
   const [pageTitle, setPageTitle] = useState('Explore All Content');
-  // To track if a search attempt with a non-empty query has been made
-  const [hasSearchedWithQuery, setHasSearchedWithQuery] = useState(false);
+  const [hasSearchedWithQuery, setHasSearchedWithQuery] = useState(!!initialGenre);
+
+  useEffect(() => {
+    if (initialGenre) {
+      const lowerCaseGenre = initialGenre.toLowerCase();
+      const results = mockReviews.filter(review =>
+        review.genres.some(g => g.toLowerCase() === lowerCaseGenre)
+      );
+      setDisplayedReviews(results);
+      setPageTitle(`Reviews for "${initialGenre.charAt(0).toUpperCase() + initialGenre.slice(1)}"`);
+      setSearchQuery(initialGenre); // Pre-fill search bar
+      setHasSearchedWithQuery(true);
+    } else {
+      setDisplayedReviews(mockReviews);
+      setPageTitle('Explore All Content');
+    }
+  }, [initialGenre]);
 
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!searchQuery.trim()) {
-      // If search query is empty, display all reviews and reset search state
       setDisplayedReviews(mockReviews);
       setPageTitle('Explore All Content');
-      setHasSearchedWithQuery(false); // Reset because it's an empty/cleared search
+      setHasSearchedWithQuery(false);
       return;
     }
 
-    // A search with a non-empty query is being made
     setHasSearchedWithQuery(true);
     const lowerCaseQuery = searchQuery.toLowerCase();
     const results = mockReviews.filter(review => {
@@ -41,7 +56,6 @@ export default function ExplorePage() {
     });
 
     setDisplayedReviews(results);
-    // Always update page title to reflect the search, even if no results
     setPageTitle(`Search Results for "${searchQuery}"`);
   };
 
@@ -77,16 +91,22 @@ export default function ExplorePage() {
             ))}
           </div>
         ) : (
-          // Show "no results" only if a specific search query was made and yielded nothing
           hasSearchedWithQuery && searchQuery.trim() !== '' && (
             <p className="text-center text-muted-foreground py-10">No results found for "{searchQuery}". Try a different search!</p>
           )
         )}
-        {/* If mockReviews itself is empty initially, and no search has been made */}
         {!hasSearchedWithQuery && displayedReviews.length === 0 && mockReviews.length === 0 && (
              <p className="text-center text-muted-foreground py-10">No content available to explore yet.</p>
         )}
       </div>
     </div>
+  );
+}
+
+export default function ExplorePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ExplorePageContent />
+    </Suspense>
   );
 }

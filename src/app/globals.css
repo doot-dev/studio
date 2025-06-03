@@ -8,19 +8,19 @@ body {
 
 @layer base {
   :root {
-    --background: 286 100% 5%; /* #12001A Very dark desaturated purple */
+    --background: 286 100% 5%; /* #12001A Background Color */
     --foreground: 0 0% 88%; /* #E0E0E0 Light grey/off-white for text */
-    --card: 286 50% 8%; /* Slightly lighter/desaturated dark purple for cards */
+    --card: 306 27% 14%; /* #2E1A2C Card/Item Background */
     --card-foreground: 0 0% 88%;
     --popover: 286 50% 10%; /* Similar to card, slightly lighter for popovers */
     --popover-foreground: 0 0% 88%;
-    --primary: 306 27% 14%; /* #2E1A2C Deep Plum */
+    --primary: 306 27% 14%; /* #2E1A2C Deep Plum - current primary, now also card color */
     --primary-foreground: 0 0% 95%; /* Off-white for text on primary */
     --secondary: 306 20% 20%; /* Muted plum */
     --secondary-foreground: 0 0% 95%;
     --muted: 286 30% 15%; /* For less important elements, darker muted purple */
     --muted-foreground: 0 0% 60%; /* Dimmer foreground text */
-    --accent: 18 41% 60%; /* #C4896F Metallic Copper */
+    --accent: 18 41% 60%; /* #C4896F Accent Color */
     --accent-foreground: 18 30% 20%; /* Darker copper/brown for text on accent */
     --destructive: 0 70% 50%; /* A suitable red for dark themes */
     --destructive-foreground: 0 0% 95%;
@@ -54,7 +54,7 @@ body {
   .dark {
     --background: 286 100% 5%;
     --foreground: 0 0% 88%;
-    --card: 286 50% 8%;
+    --card: 306 27% 14%; /* Updated card color */
     --card-foreground: 0 0% 88%;
     --popover: 286 50% 10%;
     --popover-foreground: 0 0% 88%;

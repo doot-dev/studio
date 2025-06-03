@@ -1,6 +1,7 @@
 
 import Link from 'next/link';
-import { Film, Search, HomeIcon, LayoutGrid, ListVideo, Users, Settings, UserCircle, PlusSquare } from 'lucide-react';
+import Image from 'next/image'; // Import the Image component
+import { Search, HomeIcon, LayoutGrid, ListVideo, Users, Settings, UserCircle, PlusSquare } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -22,7 +23,8 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center px-4 sm:px-6 lg:px-8">
         <Link href="/" className="mr-2 sm:mr-6 flex items-center space-x-2">
-          <Film className="h-7 w-7 text-accent" />
+          {/* Replace Film icon with Image component */}
+          <Image src="/logo.png" alt="DootRec Logo" width={28} height={28} className="text-accent" />
           <span className="font-bold text-xl whitespace-nowrap hidden sm:inline">DootRec</span>
         </Link>
 
@@ -52,7 +54,7 @@ export function Navbar() {
           <Button variant="default" size="sm" className="bg-accent hover:bg-accent/90 text-accent-foreground px-2 sm:px-3" asChild>
             <Link href="/create">
               <PlusSquare className="h-4 w-4 sm:mr-2" />
-              <span className="hidden sm:inline">Create</span> 
+              <span className="hidden sm:inline">Create</span>
             </Link>
           </Button>
 

@@ -4,7 +4,7 @@ export default function GenresPage() {
   const genres = [
     "Action", "Comedy", "Drama", "Sci-Fi", "Horror", 
     "Thriller", "Romance", "Animation", "Documentary",
-    "Fantasy", "Mystery", "Family", "Historical", "Musical"
+    "Fantasy", "Mystery", "Family", "Historical", "Musical", "Anime"
   ];
 
   return (

@@ -5,7 +5,7 @@ import type { Review } from '@/types';
 import { NetflixContentCard } from './NetflixContentCard';
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 interface ContentCarouselProps {
   title: string;
@@ -13,13 +13,22 @@ interface ContentCarouselProps {
 }
 
 export function ContentCarousel({ title, items }: ContentCarouselProps) {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const contentWrapperRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (contentWrapperRef.current && contentWrapperRef.current.parentElement) {
+      // The parentElement of the content wrapper should be the ScrollArea Viewport
+      viewportRef.current = contentWrapperRef.current.parentElement as HTMLElement;
+    }
+  }, []); // Runs once after mount and when items change to ensure viewportRef is updated
 
   const scroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      // Scroll by a percentage of the container's width, e.g., 75% or 3 cards
-      const scrollAmount = scrollContainerRef.current.clientWidth * 0.75; 
-      scrollContainerRef.current.scrollBy({
+    if (viewportRef.current) {
+      const viewport = viewportRef.current;
+      // Scroll by a percentage of the viewport's width, e.g., 75%
+      const scrollAmount = viewport.clientWidth * 0.75; 
+      viewport.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth',
       });
@@ -39,7 +48,7 @@ export function ContentCarousel({ title, items }: ContentCarouselProps) {
       <h2 className="text-2xl font-semibold tracking-tight text-foreground">{title}</h2>
       <div className="relative">
         <ScrollArea className="w-full whitespace-nowrap rounded-md">
-           <div className="flex w-max space-x-2 sm:space-x-3 pb-4" ref={scrollContainerRef}>
+           <div className="flex w-max space-x-2 sm:space-x-3 pb-4" ref={contentWrapperRef}>
             {items.map((item) => (
               <NetflixContentCard 
                 key={item.id} 
@@ -60,8 +69,8 @@ export function ContentCarousel({ title, items }: ContentCarouselProps) {
                          opacity-0 md:group-hover/carousel:opacity-100 transition-all focus:opacity-100 
                          -ml-2 md:ml-0 disabled:opacity-0 disabled:cursor-not-allowed"
               aria-label="Scroll left"
-              // Simple disabled state, can be improved with onScroll listener on scrollContainerRef
-              // disabled={scrollContainerRef.current?.scrollLeft === 0} 
+              // Basic disabled state, can be improved with onScroll listener on viewportRef
+              // disabled={viewportRef.current?.scrollLeft === 0} 
             >
               <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 text-foreground" />
             </button>
@@ -71,8 +80,8 @@ export function ContentCarousel({ title, items }: ContentCarouselProps) {
                          opacity-0 md:group-hover/carousel:opacity-100 transition-all focus:opacity-100 
                          -mr-2 md:mr-0 disabled:opacity-0 disabled:cursor-not-allowed"
               aria-label="Scroll right"
-              // Simple disabled state, can be improved
-              // disabled={scrollContainerRef.current ? scrollContainerRef.current.scrollLeft + scrollContainerRef.current.clientWidth >= scrollContainerRef.current.scrollWidth : false}
+              // Basic disabled state, can be improved
+              // disabled={viewportRef.current ? viewportRef.current.scrollLeft + viewportRef.current.clientWidth >= viewportRef.current.scrollWidth : false}
             >
               <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 text-foreground" />
             </button>

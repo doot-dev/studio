@@ -81,10 +81,11 @@ export default function ContentCarousel({
           arrows: false,
         },
       },
+      
       {
         breakpoint: 375,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 2.5,
           slidesToScroll: 1,
           arrows: false,
         },
@@ -92,7 +93,7 @@ export default function ContentCarousel({
       {
         breakpoint: 320,
         settings: {
-          slidesToShow: 1.7,
+          slidesToShow: 2,
           slidesToScroll: 1,
           arrows: false,
         },

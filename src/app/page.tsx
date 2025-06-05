@@ -1,6 +1,5 @@
-import { ContentCarousel } from "@/components/ContentCarousel";
+import ContentCarousel from "@/components/ContentCarousel";
 import { mockReviews, mockUsers } from "@/data/mock";
-import type { Review } from "@/types";
 
 // Simulate different categories of reviews
 const trendingReviews = [...mockReviews].sort(

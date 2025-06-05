@@ -24,7 +24,6 @@ export default function CommunityPage() {
           Discover and connect with other DootRec users. Follow reviewers whose tastes align with yours!
         </p>
       </header>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {mockUsers.map((user) => {
           const isFollowing = getFollowState(user.id);
@@ -38,7 +37,10 @@ export default function CommunityPage() {
               </CardHeader>
               <CardContent className="flex-grow">
                 <CardTitle className="text-xl mb-1">
-                  <Link href={`/profile/${user.id}`} className="hover:text-accent transition-colors">
+                  <Link
+                    href={`/profile/${user.id}`}
+                    className="hover:text-accent transition-colors"
+                    >
                     {user.name}
                   </Link>
                 </CardTitle>

@@ -15,7 +15,7 @@ export function PostCard({ review }: PostCardProps) {
   return (
     <Card className="overflow-hidden flex flex-col h-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card">
       <CardHeader className="p-0 relative">
-        <Link href={`/review/${review.id}`} passHref>
+        <Link href={`/review/${review.id}`} passHref >
           <Image
             src={review.thumbnailUrl}
             alt={`Thumbnail for ${review.movieTitle}`}
@@ -28,14 +28,17 @@ export function PostCard({ review }: PostCardProps) {
       </CardHeader>
       <CardContent className="p-4 flex-grow">
         <CardTitle className="text-xl mb-2 hover:text-accent transition-colors">
-          <Link href={`/review/${review.id}`}>{review.movieTitle}</Link>
+          <Link href={`/review/${review.id}`} >{review.movieTitle}</Link>
         </CardTitle>
         <div className="flex items-center space-x-2 mb-3">
           <Avatar className="h-8 w-8">
             <AvatarImage src={review.user?.avatarUrl || undefined} alt={review.user?.name || 'User'} data-ai-hint="user avatar small" />
             <AvatarFallback>{review.user?.name ? review.user.name.substring(0,1) : 'U'}</AvatarFallback>
           </Avatar>
-          <Link href={`/profile/${review.userId}`} className="text-sm font-medium hover:underline">
+          <Link
+            href={`/profile/${review.userId}`}
+            className="text-sm font-medium hover:underline"
+            >
             {review.user?.name || 'Anonymous'}
           </Link>
         </div>
@@ -61,9 +64,9 @@ export function PostCard({ review }: PostCardProps) {
         </div>
         <div className="flex space-x-2">
           <Button variant="ghost" size="icon" asChild>
-            <a href={review.ottLink} target="_blank" rel="noopener noreferrer" aria-label="View on OTT platform">
+            <Link href={review.ottLink} target="_blank" rel="noopener noreferrer" aria-label="View on OTT platform">
               <ExternalLink className="h-4 w-4" />
-            </a>
+            </Link>
           </Button>
           <Button variant="ghost" size="icon" aria-label="Bookmark">
             <BookmarkIcon className="h-4 w-4" />

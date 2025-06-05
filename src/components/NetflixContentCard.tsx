@@ -22,8 +22,8 @@ export function NetflixContentCard({ review, className }: NetflixContentCardProp
       {/* Wrapper for image and play button for positioning context */}
       <div className="relative aspect-[2/3] w-full">
         {/* Link for the image to go to review details */}
-        <Link href={`/review/${review.id}`} passHref legacyBehavior>
-          <a className="block w-full h-full rounded-t-lg overflow-hidden" aria-label={`View details for ${review.movieTitle}`}>
+        <Link href={`/review/${review.id}`} passHref >
+          <div className="block w-full h-full rounded-t-lg overflow-hidden" aria-label={`View details for ${review.movieTitle}`}>
             <Image
               src={review.thumbnailUrl}
               alt={`Thumbnail for ${review.movieTitle}`}
@@ -32,25 +32,25 @@ export function NetflixContentCard({ review, className }: NetflixContentCardProp
               className="object-cover transition-transform duration-300 md:group-hover:scale-105"
               data-ai-hint="movie poster cinematic"
             />
-          </a>
+          </div>
         </Link>
         {/* Play button overlay - links to external OTT. */}
-        <a
-          href={review.ottLink}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href={`/review/${review.id}`}
           onClick={(e) => e.stopPropagation()} // Prevents Link navigation when play is clicked
           className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 focus:opacity-100"
           aria-label={`Play ${review.movieTitle} on OTT site`}
         >
           <PlayCircle className="h-10 w-10 text-white/80 hover:text-white md:h-12 md:w-12 transition-transform hover:scale-110" />
-        </a>
+        </Link>
       </div>
-
       {/* Content below the image - Title only */}
       <div className="px-2 py-1.5 text-center">
         <h3 className="text-xs sm:text-sm font-medium text-foreground truncate" title={review.movieTitle}>
-          <Link href={`/review/${review.id}`} className="hover:underline focus:outline-none focus:ring-1 focus:ring-ring rounded">
+          <Link
+            href={`/review/${review.id}`}
+            className="hover:underline focus:outline-none focus:ring-1 focus:ring-ring rounded"
+            >
             {review.movieTitle}
           </Link>
         </h3>

@@ -19,7 +19,6 @@ export default function GenresPage() {
           Discover reviews based on your favorite movie and show genres. Click on a genre to see related content.
         </p>
       </header>
-
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
         {genres.map((genre) => (
           <Link
@@ -27,7 +26,7 @@ export default function GenresPage() {
             href={`/explore?genre=${encodeURIComponent(genre.toLowerCase())}`}
             passHref
             className="group relative flex flex-col items-center justify-center p-6 aspect-video rounded-lg bg-card hover:bg-primary/20 transition-all duration-300 ease-in-out shadow-md hover:shadow-xl transform hover:scale-105"
-          >
+            >
             <div
               className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary/30 via-accent/30 to-secondary/30 opacity-50 group-hover:opacity-70 transition-opacity"
               style={{

@@ -11,7 +11,11 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Heart, MessageCircle, Bookmark as BookmarkIcon, Share2, Edit3, Trash2, ExternalLink } from 'lucide-react';
 import { useState, useEffect } from 'react'; // Import useState and useEffect
 
-export default function ReviewDetailPage({ params }: { params: { reviewId: string } }) {
+import { useParams } from 'next/navigation';
+
+export default function ReviewDetailPage() {
+
+  const params = useParams();
   const review = mockReviews.find(r => r.id === params.reviewId);
   const [formattedDate, setFormattedDate] = useState('');
 
@@ -66,7 +70,10 @@ export default function ReviewDetailPage({ params }: { params: { reviewId: strin
                 <AvatarFallback className="text-lg">{review.user?.name ? review.user.name.substring(0,1) : 'U'}</AvatarFallback>
               </Avatar>
               <div>
-                <Link href={`/profile/${review.userId}`} className="text-lg font-semibold hover:underline">
+                <Link
+                  href={`/profile/${review.userId}`}
+                  className="text-lg font-semibold hover:underline"
+                  >
                   {review.user?.name || 'Anonymous'}
                 </Link>
                 <p className="text-sm text-muted-foreground">
@@ -74,11 +81,11 @@ export default function ReviewDetailPage({ params }: { params: { reviewId: strin
                 </p>
               </div>
             </div>
-             <a href={review.ottLink} target="_blank" rel="noopener noreferrer" className="inline-block">
+             <Link href={review.ottLink} target="_blank" rel="noopener noreferrer" className="inline-block">
                 <Button variant="outline" size="sm">
                     <ExternalLink className="mr-2 h-4 w-4"/> View on OTT
                 </Button>
-            </a>
+            </Link>
           </div>
 
           <article className="prose prose-invert max-w-none text-foreground/90 text-base leading-relaxed">
@@ -113,7 +120,6 @@ export default function ReviewDetailPage({ params }: { params: { reviewId: strin
           </div>
         </CardContent>
       </Card>
-
       {/* Placeholder for comments section */}
       <div className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">Comments</h2>

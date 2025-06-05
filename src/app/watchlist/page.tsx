@@ -19,14 +19,16 @@ export default function WatchlistPage() {
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-2">My Watchlist</h1>
         <p className="text-lg text-muted-foreground">Movies and shows you want to watch or have watched.</p>
       </div>
-
       {watchlistContent.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {watchlistContent.map((item) => (
              // Using a custom card for watchlist item for more specific layout
-            <Card key={item.id} className="overflow-hidden flex flex-col h-full shadow-lg hover:shadow-xl transition-shadow duration-300">
+            (<Card key={item.id} className="overflow-hidden flex flex-col h-full shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardHeader className="p-0 relative">
-                <Link href={item.reviewDetails ? `/review/${item.reviewDetails.id}` : '#'} passHref>
+                <Link
+                  href={item.reviewDetails ? `/review/${item.reviewDetails.id}` : '#'}
+                  passHref
+                  >
                     <Image
                     src={item.thumbnailUrl}
                     alt={`Thumbnail for ${item.movieTitle}`}
@@ -39,7 +41,9 @@ export default function WatchlistPage() {
               </CardHeader>
               <CardContent className="p-4 flex-grow">
                 <CardTitle className="text-lg mb-2 hover:text-accent transition-colors">
-                  <Link href={item.reviewDetails ? `/review/${item.reviewDetails.id}` : '#'}>{item.movieTitle}</Link>
+                  <Link
+                    href={item.reviewDetails ? `/review/${item.reviewDetails.id}` : '#'}
+                    >{item.movieTitle}</Link>
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">Added: {new Date(item.addedAt).toLocaleDateString()}</p>
               </CardContent>
@@ -49,7 +53,7 @@ export default function WatchlistPage() {
                   {item.watched ? 'Watched' : 'Mark as Watched'}
                 </Button>
               </CardFooter>
-            </Card>
+            </Card>)
           ))}
         </div>
       ) : (
